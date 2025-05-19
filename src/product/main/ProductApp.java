@@ -22,7 +22,7 @@ public class ProductApp {
             System.out.println("2. 재고 수정");
             System.out.println("3. 상품 삭제");
             System.out.println("4. 상품 검색");
-            System.out.println("5. 종료");
+            System.out.println("5. 상품 관리 메뉴 종료");
 
             System.out.print("👉 메뉴 선택: ");
             String choice = sc.nextLine();
@@ -33,7 +33,7 @@ public class ProductApp {
                 case "3" -> deleteService.deleteProduct();
                 case "4" -> searchService.search();
                 case "5" -> {
-                    System.out.println("🚪 프로그램을 종료합니다.");
+                    System.out.println("🚪 상품 프로그램을 종료합니다.");
                     return;
                 }
                 default -> System.out.println("❌ 잘못된 입력입니다. 1~5 사이의 숫자를 입력하세요.");
