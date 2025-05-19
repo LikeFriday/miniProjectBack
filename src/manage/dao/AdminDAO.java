@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdminDAO {
     Connection con = null;
@@ -78,19 +80,30 @@ public class AdminDAO {
         }
         System.out.println();
     }
-
+    // 관리자 추가
     public void adminAdd()  {
         con = MyDBConnection.getConnection();
         System.out.print("아이디 : ");
         String id = sc.nextLine();
         System.out.print("비밀번호 : ");
         String pw = sc.nextLine();
+        if(!checkPwd(pw)){
+            return;
+    }
+
         System.out.print("이름 : ");
         String name = sc.nextLine();
         System.out.print("이메일 : ");
         String email = sc.nextLine();
+        if(!checkEmail(email)){
+            return;
+        }
+
         System.out.print("등급 : ");
         String role = sc.nextLine();
+        if(!checkRole(role)){
+            return;
+        }
         sql = "insert into admin(uid, admin_id, admin_pwd, admin_name, admin_email, role, create_date) values(null,?,?,?,?,?,now())";
         try {
             pstmt = con.prepareStatement(sql);
@@ -163,6 +176,9 @@ public class AdminDAO {
         try {
             System.out.print("변경할 메일 : ");
             String email = sc.nextLine();
+            if(!checkEmail(email)){
+                return;
+            }
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, email);
             pstmt.setInt(2, uid);
@@ -185,6 +201,9 @@ public class AdminDAO {
         try {
             System.out.print("변경할 비밀번호 : ");
             String pwd = sc.nextLine();
+            if(!checkPwd(pwd)){
+                return;
+            }
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, pwd);
             pstmt.setInt(2, uid);
@@ -198,7 +217,14 @@ public class AdminDAO {
     public void adminUpdateRole() {
         Scanner sc = new Scanner(System.in);
         System.out.print("수정할 관리자 번호 : ");
-        int uid = Integer.parseInt(sc.nextLine());
+        int uid = 0;
+        try {
+           uid = Integer.parseInt(sc.nextLine());
+        }catch (NumberFormatException e){
+            System.out.println("숫자를 입력하세요");
+            return;
+        }
+
         if(!selectAdmin(uid)){
             return;
         }
@@ -207,15 +233,14 @@ public class AdminDAO {
         try {
             System.out.print("변경할 등급 : ");
             String role = sc.nextLine();
-            if(role.equals("A") || role.equals("B") || role.equals("C")){
-                pstmt = con.prepareStatement(sql);
-                pstmt.setString(1, role);
-                pstmt.setInt(2, uid);
-                pstmt.executeUpdate();
-                System.out.println("변경 완료");
-            }else{
-                System.out.println("등급 입력 오류");
+            if(!checkRole(role)){
+                return;
             }
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, role);
+            pstmt.setInt(2, uid);
+            pstmt.executeUpdate();
+            System.out.println("변경 완료");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -239,4 +264,35 @@ public class AdminDAO {
         System.out.println("입력한 관리자 번호가 없습습니다.");
         return false;
     }
+
+    private boolean checkEmail(String email) {
+        if(email.indexOf("@") == -1){
+            System.out.println("이메일 형식이 아닙니다.");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkPwd(String pw) {
+        String regex = "[!@#$%^&*]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pw);
+        if (matcher.find()) {
+           return true;
+        } else {
+            System.out.println("비밀번호에 특수문자가 없습니다. ");
+            return false;
+        }
+    }
+
+    private boolean checkRole(String role) {
+        if(role.equals("A") || role.equals("B") || role.equals("C")){
+            return true;
+        }else{
+            System.out.println("등급 입력 오류 A/B/C 입력가능");
+            return false;
+        }
+    }
+
 }
