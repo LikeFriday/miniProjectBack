@@ -35,6 +35,7 @@ public class ProductApp {
                 case "5" -> {
                     System.out.println("🚪 프로그램을 종료합니다.");
                     return;
+                    
                 }
                 default -> System.out.println("❌ 잘못된 입력입니다. 1~5 사이의 숫자를 입력하세요.");
             }
