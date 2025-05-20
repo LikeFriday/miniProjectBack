@@ -1,6 +1,6 @@
 package customer.main;
 
-import customer.dbconnection.MyDBConnection;
+import dbconnection.MyDBConnection;
 
 import java.util.Scanner;
 

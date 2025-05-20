@@ -1,7 +1,7 @@
 package customer.DAO;//고객 목록 관리
 
 import customer.DTO.CustomerInfo;
-import customer.dbconnection.MyDBConnection;
+import dbconnection.MyDBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
