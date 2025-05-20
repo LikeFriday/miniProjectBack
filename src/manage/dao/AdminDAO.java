@@ -48,7 +48,7 @@ public class AdminDAO {
         return admin;
     }
     // 관리자 리스트 표
-    public void adminFindAll(){
+    public List<Admin> adminFindAll(){
         List<Admin> list = new ArrayList<Admin>();
         Admin admin = null;
         con = MyDBConnection.getConnection();
@@ -70,11 +70,7 @@ public class AdminDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        for(Admin a : list){
-            System.out.println(a);
-        }
-        System.out.println();
+        return list;
     }
 
     // 관리자 추가
@@ -89,7 +85,6 @@ public class AdminDAO {
             pstmt.setString(4, admin.getAdminEmail());
             pstmt.setString(5, admin.getRole());
             pstmt.executeUpdate();
-            System.out.println("등록되었습니다. ");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -105,7 +100,6 @@ public class AdminDAO {
             pstmt.setString(1, id);
             pstmt.setString(2, pw);
             pstmt.executeUpdate();
-            System.out.println("삭제되었습니다.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -191,7 +185,6 @@ public class AdminDAO {
         }finally {
             MyDBConnection.close(rs, pstmt, con);
         }
-        System.out.println("입력한 관리자 번호가 없습습니다.");
         return false;
     }
 }

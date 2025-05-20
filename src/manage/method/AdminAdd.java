@@ -36,5 +36,6 @@ public class AdminAdd {
         admin.setRole(role);
 
         dao.adminAdd(admin);
+        System.out.println("등록되었습니다.");
     }
 }

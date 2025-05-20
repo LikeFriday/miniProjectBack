@@ -14,5 +14,6 @@ public class AdminDelete {
         String pw = sc.nextLine();
 
         dao.adminDelete(id,pw);
+        System.out.println("삭제되었습니다.");
     }
 }
