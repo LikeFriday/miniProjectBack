@@ -1,14 +1,17 @@
 package manage.main;
 
+import customer.main.CustomerMenu;
 import manage.dao.AdminDAO;
 import manage.dto.Admin;
+import manage.method.AdminLogin;
 import manage.print.Menu;
 import product.main.ProductApp;
 
 import java.util.Scanner;
 
 public class Main {
-    AdminDAO dao = new AdminDAO();
+    AdminLogin adminLogin = new AdminLogin();
+    CustomerMenu customerMenu = new CustomerMenu();
     Admin admin = null;
     Scanner sc = new Scanner(System.in);
     public void run() {
@@ -19,7 +22,7 @@ public class Main {
             if(choice == 2){
                 System.out.println("프로그램 종료"); break; }
 
-            admin = dao.login();
+            admin = adminLogin.adminLogin();
             if(admin == null){System.out.println("로그인 실패"); continue;}
             while(true){
                 Menu.mainMenu();
@@ -27,7 +30,8 @@ public class Main {
                 if(choice == 0){ break; }
                 switch (choice){
                     case 1:  ManagerMenu.adminMenu(admin); break;
-                    case 2:  ProductApp.run();
+                    case 2:  ProductApp.run(); break;
+                    case 3:  CustomerMenu.Menu(sc); break;
                     default:
                         System.out.println("입력 오류"); break;
                 }
