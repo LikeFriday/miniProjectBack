@@ -4,13 +4,14 @@ import manage.dao.AdminDAO;
 import manage.dto.Admin;
 import manage.method.AdminAdd;
 import manage.method.AdminDelete;
+import manage.method.AdminList;
 import manage.print.Menu;
 
 import java.util.Scanner;
 
 public class ManagerMenu {
     static public void adminMenu(Admin admin) {
-        AdminDAO dao = new AdminDAO();
+        AdminList adminList = new AdminList();
         AdminAdd adminAdd = new AdminAdd();
         AdminDelete adminDelete = new AdminDelete();
         Scanner sc = new Scanner(System.in);
@@ -22,7 +23,7 @@ public class ManagerMenu {
                 break;
             }
             switch (choice) {
-                case 1: dao.adminFindAll(); break;
+                case 1: adminList.adminList(); break;
                 case 2:
                     if(admin.getRole().equals("A")){ adminAdd.adminAdd(); break; }
                     System.out.println("권한이 없습니다.");

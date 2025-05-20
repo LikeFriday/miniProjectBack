@@ -20,8 +20,8 @@ public class Main {
             System.out.print("입력 : ");
             int choice = Integer.parseInt(sc.nextLine());
             if(choice == 2){
-                System.out.println("프로그램 종료"); break; }
-
+                System.out.println("프로그램 종료"); break;
+            }
             admin = adminLogin.adminLogin();
             if(admin == null){System.out.println("로그인 실패"); continue;}
             while(true){
