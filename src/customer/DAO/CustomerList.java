@@ -1,7 +1,7 @@
 package customer.DAO;//고객 목록 관리
 
 import customer.DTO.CustomerInfo;
-import customer.dbconnection.MyDBConnection;
+import dbconnection.MyDBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,36 +110,6 @@ public class CustomerList {
         }finally {
             MyDBConnection.close(null, pstmt, con);
         }
-    }
-
-    public CustomerInfo findCustomerName(String customerName) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        String sql = "SELECT * FROM customerInfo WHERE name = ?";
-
-        try {
-            con = MyDBConnection.getConnection();
-            pstmt = con.prepareStatement(sql);
-
-            pstmt.setString(1, customerName);
-            rs = pstmt.executeQuery();
-
-            //아이디가 있으면 객체 생성
-            if (rs.next()) {
-                return new CustomerInfo(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public CustomerInfo findUserId(String userId) {

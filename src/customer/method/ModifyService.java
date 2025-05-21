@@ -29,9 +29,9 @@ public class ModifyService {
                 try {
                     modifyOption = Integer.parseInt(scanner.nextLine());
                     if (modifyOption >= 1 && modifyOption <= 5) break;
-                    else System.out.println("❌ 1~5 사이의 숫자를 입력해주세요.");
+                    else System.out.println("❌ 1~5 사이의 숫자를 입력해주세요.\n");
                 } catch (NumberFormatException e) {
-                    System.out.println("❌ 숫자로 입력해주세요.");
+                    System.out.println("❌ 숫자로 입력해주세요.\n");
                 }
             }
 
@@ -70,7 +70,7 @@ public class ModifyService {
                         try {
                             InputValidator.isValidName(modifyName);
                             if (modifyName.equals(customer.getCustomerName())) {
-                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.");
+                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.\n");
                             } else {
                                 customer.setCustomerName(modifyName);
                                 updated = true;
@@ -87,7 +87,7 @@ public class ModifyService {
                         try {
                             InputValidator.isValidEmail(modifyEmail);
                             if (modifyEmail.equals(customer.getEmail())) {
-                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.");
+                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.\n");
                             } else {
                                 customer.setEmail(modifyEmail);
                                 updated = true;
@@ -104,7 +104,7 @@ public class ModifyService {
                         try {
                             InputValidator.isValidPhone(modifyPhone);
                             if (modifyPhone.equals(customer.getPhone())) {
-                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.");
+                                System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.\n");
                             } else {
                                 customer.setPhone(modifyPhone);
                                 updated = true;
@@ -117,10 +117,15 @@ public class ModifyService {
 
                     case 4: // 회원등급 수정
                         System.out.print("수정할 등급을 선택해주세요 1.FAMILY 2.BRONZE 3.SILVER 4.GOLD 5.VIP >> ");
-                        int modifyLevel = Integer.parseInt(scanner.nextLine());
-
-                        if (modifyLevel < 1 || modifyLevel > 5) {
-                            System.out.println("❌ 잘못 입력하셨습니다. 다시 입력해주세요");
+                        int modifyLevel;
+                        try {
+                            modifyLevel = Integer.parseInt(scanner.nextLine());
+                            if (modifyLevel < 1 || modifyLevel > 5) {
+                                System.out.println("❌ 잘못 입력하셨습니다. 다시 입력해주세요\n");
+                                continue;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("❌ 숫자로 입력해주세요.\n");
                             continue;
                         }
 
@@ -128,7 +133,7 @@ public class ModifyService {
                         String selectedLevel = levels[modifyLevel - 1];
 
                         if (selectedLevel.equals(customer.getMembershipLevel())) {
-                            System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.");
+                            System.out.println("⚠️ 기존 정보와 동일하여 수정하지 않습니다.\n");
                         } else {
                             customer.setMembershipLevel(selectedLevel);
                             updated = true;
@@ -136,7 +141,7 @@ public class ModifyService {
                         break;
 
                     default:
-                        System.out.println("❌ 잘못된 선택입니다.");
+                        System.out.println("❌ 잘못된 선택입니다.\n");
                         break;
                 }
                 break; // switch 처리 완료 후 루프 탈출
@@ -145,7 +150,7 @@ public class ModifyService {
             // 수정이 발생했을 경우 저장
             if (updated) {
                 list.update(customer);
-                System.out.println("✅ 정보가 성공적으로 수정되었습니다.");
+                System.out.println("✅ 정보가 성공적으로 수정되었습니다.\n");
             }
 
         } while (askContinue(scanner)); // 수정 계속 여부 확인
@@ -159,9 +164,9 @@ public class ModifyService {
                 int input = Integer.parseInt(scanner.nextLine());
                 if (input == 1) return true;
                 if (input == 2) return false;
-                System.out.println("❌ 1 또는 2를 입력해주세요.");
+                System.out.println("❌ 1 또는 2를 입력해주세요.\n");
             } catch (NumberFormatException e) {
-                System.out.println("❌ 숫자로 입력해주세요.");
+                System.out.println("❌ 숫자로 입력해주세요.\n");
             }
         }
     }

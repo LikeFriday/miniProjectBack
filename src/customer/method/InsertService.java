@@ -40,7 +40,7 @@ public class InsertService {
                 InputValidator.isValidUserId(userId);
                 //중복 방지
                 if(list.findUserId(userId) != null) {
-                    System.out.println("이미 사용중인 아이디입니다.");
+                    System.out.println("❗이미 사용중인 아이디입니다.\n");
                     continue;
                 }
                 break;
@@ -58,7 +58,7 @@ public class InsertService {
                 InputValidator.isValidEmail(email);
                 //중복 방지
                 if(list.findEmail(email) != null) {
-                    System.out.println("이미 사용중인 이메일입니다.");
+                    System.out.println("❗이미 사용중인 이메일입니다.\n");
                     continue;
                 }
                 break;
@@ -76,7 +76,7 @@ public class InsertService {
                 InputValidator.isValidPhone(phone);
                 //중복 방지
                 if(list.findPhone(phone) != null) {
-                    System.out.println("이미 사용중인 전화번호입니다.");
+                    System.out.println("❗이미 사용중인 전화번호입니다.\n");
                     continue;
                 }
                 break;
@@ -99,18 +99,18 @@ public class InsertService {
                     case 4: membershipLevel = "GOLD"; break;
                     case 5: membershipLevel = "VIP"; break;
                     default:
-                        System.out.println("잘못 입력하셨습니다. 다시 선택해주세요.");
+                        System.out.println("❌ 잘못 입력하셨습니다. 다시 선택해주세요.\n");
                         continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("숫자로 입력해주세요.");
+                System.out.println("❌ 숫자로 입력해주세요.\n");
             }
         }
 
         // 고객 정보 객체 생성 후 리스트에 추가
         CustomerInfo customer = new CustomerInfo(customerName, userId, email, phone, membershipLevel);
         list.insert(customer);
-        System.out.println("✅ 고객 등록이 완료되었습니다.");
+        System.out.println("✅ 고객 등록이 완료되었습니다.\n");
     }
 }
