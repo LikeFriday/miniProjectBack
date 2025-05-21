@@ -112,36 +112,6 @@ public class CustomerList {
         }
     }
 
-    public CustomerInfo findCustomerName(String customerName) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        String sql = "SELECT * FROM customerInfo WHERE name = ?";
-
-        try {
-            con = MyDBConnection.getConnection();
-            pstmt = con.prepareStatement(sql);
-
-            pstmt.setString(1, customerName);
-            rs = pstmt.executeQuery();
-
-            //아이디가 있으면 객체 생성
-            if (rs.next()) {
-                return new CustomerInfo(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public CustomerInfo findUserId(String userId) {
        Connection con = null;
        PreparedStatement pstmt = null;

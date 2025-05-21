@@ -24,8 +24,13 @@ public class SearchService {
             System.out.print("\n검색할 항목을 입력해주세요 (1. 아이디 2. 이메일 3. 전화번호 4. exit) >> ");
             int searchOption = Integer.parseInt(scanner.nextLine()); // 검색 항목 선택
 
-            if (searchOption < 1 || searchOption > 4) {
-                System.out.println("❌ 잘못된 선택입니다. 다시 입력해주세요.");
+            try {
+                if (searchOption < 1 || searchOption > 4) {
+                    System.out.println("❌ 잘못된 선택입니다. 다시 입력해주세요.\n");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("❌ 숫자로 입력해주세요.\n");
                 continue;
             }
 
