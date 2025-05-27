@@ -12,8 +12,8 @@ public class AdminDelete {
         String id = sc.nextLine();
         System.out.print("삭제할 pw : ");
         String pw = sc.nextLine();
-
-        dao.adminDelete(id,pw);
+        String encryptPw = Encryption.encrypt(Encryption.FIXED_KEY, Encryption.FIXED_IV, pw);
+        dao.adminDelete(id,encryptPw);
         System.out.println("삭제되었습니다.");
     }
 }

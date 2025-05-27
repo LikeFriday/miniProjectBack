@@ -81,12 +81,13 @@ public class AdminUpdate {
         }
         admin.setUid(uid);
         System.out.print("변경할 비밀번호 : ");
-        String pwd = sc.nextLine();
-        if(!Validation.checkPwd(pwd)){
+        String pw = sc.nextLine();
+        if(!Validation.checkPwd(pw)){
             System.out.println("비밀번호에 특수문자가 포함되어있지 않습니다.");
             return;
         }
-        admin.setAdminPw(pwd);
+        String encryptPw = Encryption.encrypt(Encryption.FIXED_KEY, Encryption.FIXED_IV, pw);
+        admin.setAdminPw(encryptPw);
         dao.adminUpdatePassword(admin);
         System.out.println("비밀번호 변경 완료 ");
     }
