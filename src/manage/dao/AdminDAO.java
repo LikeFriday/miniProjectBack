@@ -2,6 +2,7 @@ package manage.dao;
 
 import dbconnection.MyDBConnection;
 import manage.dto.Admin;
+import manage.method.Encryption;
 import manage.method.Validation;
 
 import java.sql.Connection;
@@ -51,6 +52,7 @@ public class AdminDAO {
     public List<Admin> adminFindAll(){
         List<Admin> list = new ArrayList<Admin>();
         Admin admin = null;
+        String decryptPw = null;
         con = MyDBConnection.getConnection();
         sql = "select * from admin";
         try {
@@ -60,7 +62,13 @@ public class AdminDAO {
                 admin = new Admin();
                 admin.setUid(rs.getInt("uid"));
                 admin.setAdminId(rs.getString("admin_id"));
-                admin.setAdminPw(rs.getString("admin_pwd"));
+
+                if(!rs.getString("admin_pwd").equals("admin")){
+                    decryptPw = Encryption.decrypt(Encryption.FIXED_KEY, Encryption.FIXED_IV, rs.getString("admin_pwd"));
+                    admin.setAdminPw(decryptPw);
+                }else{
+                    admin.setAdminPw(rs.getString("admin_pwd"));
+                }
                 admin.setAdminName(rs.getString("admin_name"));
                 admin.setAdminEmail(rs.getString("admin_email"));
                 admin.setRole(rs.getString("role"));
@@ -147,7 +155,6 @@ public class AdminDAO {
             pstmt.setString(1,admin.getAdminPw());
             pstmt.setInt(2, admin.getUid());
             pstmt.executeUpdate();
-            System.out.println("변경 완료");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

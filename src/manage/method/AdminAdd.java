@@ -29,8 +29,9 @@ public class AdminAdd {
         if(!Validation.checkRole(role)){
             return;
         }
+        String enPw = Encryption.encrypt(Encryption.FIXED_KEY, Encryption.FIXED_IV, pw);
         admin.setAdminId(id);
-        admin.setAdminPw(pw);
+        admin.setAdminPw(enPw);
         admin.setAdminName(name);
         admin.setAdminEmail(email);
         admin.setRole(role);

@@ -14,7 +14,14 @@ public class AdminLogin {
         String id = sc.nextLine();
         System.out.print("비밀번호 : ");
         String pw = sc.nextLine();
-        admin = dao.login(id, pw);
+
+        if(pw.equals("admin")){
+            admin = dao.login(id, pw);
+        }else{
+            String encryptPw = Encryption.encrypt(Encryption.FIXED_KEY, Encryption.FIXED_IV, pw);
+            admin = dao.login(id, encryptPw);
+        }
+
         if(admin == null){
             System.out.println("로그인 실패");
             return null;
